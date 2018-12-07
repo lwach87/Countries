@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var factory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var adapter: ListAdapter
+    lateinit var listAdapter: ListAdapter
 
     private lateinit var viewModel: MainActivityViewModel
 
@@ -33,10 +33,10 @@ class MainActivity : AppCompatActivity() {
             viewModel.dataManager.initializeData()
         }
 
-        recycler_view.adapter
+        recycler_view.adapter = listAdapter
     }
 
     private fun subscribeToLiveData() {
-        viewModel.featureLiveData.observe(this, Observer { country -> country?.let { adapter.swapData(it) } })
+        viewModel.featureLiveData.observe(this, Observer { country -> country?.let { listAdapter.swapData(it) } })
     }
 }

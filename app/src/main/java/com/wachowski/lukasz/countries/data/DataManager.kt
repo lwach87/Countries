@@ -13,7 +13,6 @@ import com.wachowski.lukasz.countries.utils.Constants.PREFS_NAME
 import com.wachowski.lukasz.countries.utils.Constants.SYNC_FLEXTIME_SECONDS
 import com.wachowski.lukasz.countries.utils.Constants.SYNC_INTERVAL_SECONDS
 import io.reactivex.Completable
-import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
 
 class DataManager(private val apiHelper: ApiHelper, val modelDao: ModelDao, val context: Context) {
@@ -66,25 +65,14 @@ class DataManager(private val apiHelper: ApiHelper, val modelDao: ModelDao, val 
     }
 
     fun syncData() {
-        apiHelper.data
+        apiHelper.getData()
             .subscribeOn(Schedulers.io())
             .flatMapCompletable { data ->
-                Completable.create {
+                Completable.create { _ ->
 
+                    Log.d("Debugger", data.toString())
                     modelDao.insertCountries(data)
 
-                }
-            }.subscribe()
-
-
-        apiHelper.data
-            .subscribeOn(Schedulers.io())
-            .concatMap { Flowable.fromIterable(it) }
-            .concatMap { apiHelper.currencyData(it.countryName) }
-            .flatMapCompletable { data ->
-                Completable.create {
-
-                    modelDao.insertCurrencies(data)
                 }
             }.subscribe()
     }
