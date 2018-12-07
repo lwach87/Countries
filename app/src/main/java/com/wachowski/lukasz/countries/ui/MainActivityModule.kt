@@ -10,6 +10,11 @@ import dagger.Provides
 class MainActivityModule {
 
     @Provides
+    fun provideAdapter(): ListAdapter {
+        return ListAdapter()
+    }
+
+    @Provides
     fun provideMainViewModel(dataManager: DataManager): MainActivityViewModel {
         return MainActivityViewModel(dataManager)
     }
