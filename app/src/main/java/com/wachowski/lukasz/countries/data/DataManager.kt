@@ -13,11 +13,8 @@ import com.wachowski.lukasz.countries.utils.Constants.PREFS_NAME
 import com.wachowski.lukasz.countries.utils.Constants.SYNC_FLEXTIME_SECONDS
 import com.wachowski.lukasz.countries.utils.Constants.SYNC_INTERVAL_SECONDS
 import io.reactivex.Completable
-import io.reactivex.CompletableObserver
-import io.reactivex.annotations.NonNull
-import io.reactivex.disposables.Disposable
+import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 
 class DataManager(private val apiHelper: ApiHelper, val modelDao: ModelDao, val context: Context) {
 
@@ -71,24 +68,24 @@ class DataManager(private val apiHelper: ApiHelper, val modelDao: ModelDao, val 
     fun syncData() {
         apiHelper.data
             .subscribeOn(Schedulers.io())
-            .flatMapCompletable { countries ->
+            .flatMapCompletable { data ->
                 Completable.create {
 
-                    countries.forEach { Log.d("Debugger", it.countryName) }
-                    modelDao.insertCountries(countries)
-                }
-            }.subscribe(object : CompletableObserver {
-                override fun onSubscribe(@NonNull d: Disposable) {
-                    Timber.d("Sync started...")
-                }
+                    modelDao.insertCountries(data)
 
-                override fun onComplete() {
-                    Timber.d("Sync finished...")
                 }
+            }.subscribe()
 
-                override fun onError(@NonNull e: Throwable) {
-                    Timber.d("Sync failed! Error: %s", e.message)
+
+        apiHelper.data
+            .subscribeOn(Schedulers.io())
+            .concatMap { Flowable.fromIterable(it) }
+            .concatMap { apiHelper.currencyData(it.countryName) }
+            .flatMapCompletable { data ->
+                Completable.create {
+
+                    modelDao.insertCurrencies(data)
                 }
-            })
+            }.subscribe()
     }
 }
