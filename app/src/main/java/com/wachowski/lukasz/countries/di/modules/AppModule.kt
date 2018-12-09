@@ -3,12 +3,13 @@ package com.wachowski.lukasz.countries.di.modules
 import android.app.Application
 import android.arch.persistence.room.Room
 import android.content.Context
-import com.wachowski.lukasz.countries.utils.Constants
-import com.wachowski.lukasz.countries.utils.Constants.DATABASE_NAME
 import com.wachowski.lukasz.countries.data.DataManager
-import com.wachowski.lukasz.countries.data.local.ModelDao
+import com.wachowski.lukasz.countries.data.local.AppDbHelper
+import com.wachowski.lukasz.countries.data.local.DbHelper
 import com.wachowski.lukasz.countries.data.local.ModelDatabase
 import com.wachowski.lukasz.countries.data.remote.ApiHelper
+import com.wachowski.lukasz.countries.utils.Constants
+import com.wachowski.lukasz.countries.utils.Constants.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -34,12 +35,6 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideDao(modelDatabase: ModelDatabase): ModelDao {
-        return modelDatabase.modelDao()
-    }
-
-    @Provides
-    @Singleton
     fun retrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Constants.URL)
@@ -56,7 +51,13 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideDataManager(apiHelper: ApiHelper, modelDao: ModelDao, context: Context): DataManager {
-        return DataManager(apiHelper, modelDao, context)
+    fun provideDbHelper(appDbHelper: AppDbHelper): DbHelper {
+        return appDbHelper
+    }
+
+    @Provides
+    @Singleton
+    fun provideDataManager(apiHelper: ApiHelper, dbHelper: DbHelper, context: Context): DataManager {
+        return DataManager(apiHelper, dbHelper, context)
     }
 }

@@ -12,12 +12,12 @@ import timber.log.Timber
 class MainActivityViewModel(val dataManager: DataManager) : ViewModel() {
 
     val featureLiveData: MutableLiveData<List<Country>> = MutableLiveData()
-    private val disposable: CompositeDisposable? = null
+    private val disposable: CompositeDisposable? = CompositeDisposable()
 
     fun getCountries() {
         disposable?.add(
             dataManager
-                .modelDao
+                .dbHelper
                 .getCountries()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
