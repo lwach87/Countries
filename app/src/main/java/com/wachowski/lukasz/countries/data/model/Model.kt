@@ -4,19 +4,18 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.wachowski.lukasz.countries.utils.Constants.TABLE_COUNTRIES
-import com.wachowski.lukasz.countries.utils.Constants.TABLE_CURRENCIES
 
 @Entity(tableName = TABLE_COUNTRIES)
 data class Country(
     @PrimaryKey
     @SerializedName("name")
     val countryName: String,
-    val topLevelDomain: MutableList<String>,
-    val callingCodes: MutableList<String>,
-    val currency: List<Currency>
+    val topLevelDomain: List<String>,
+    val callingCodes: List<String>,
+    val capital: String,
+    val currencies: List<Currency>
 )
 
-@Entity(tableName = TABLE_CURRENCIES)
 data class Currency(
     @PrimaryKey
     @SerializedName("name")

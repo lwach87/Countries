@@ -3,9 +3,8 @@ package com.wachowski.lukasz.countries.data
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
-import android.util.Log
 import com.firebase.jobdispatcher.*
-import com.wachowski.lukasz.countries.data.local.ModelDao
+import com.wachowski.lukasz.countries.data.local.DbHelper
 import com.wachowski.lukasz.countries.data.remote.ApiHelper
 import com.wachowski.lukasz.countries.utils.Constants.DATA_TAG
 import com.wachowski.lukasz.countries.utils.Constants.PREFS_INITIALIZED
@@ -15,13 +14,11 @@ import com.wachowski.lukasz.countries.utils.Constants.SYNC_INTERVAL_SECONDS
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 
-class DataManager(private val apiHelper: ApiHelper, val modelDao: ModelDao, val context: Context) {
+class DataManager(private val apiHelper: ApiHelper, val dbHelper: DbHelper, val context: Context) {
 
     fun initializeData() {
 
         val preferences = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-
-        Log.d("Debugger", preferences.getBoolean("initialized", false).toString())
 
         if (preferences.getBoolean(PREFS_INITIALIZED, false)) {
             return
@@ -68,11 +65,8 @@ class DataManager(private val apiHelper: ApiHelper, val modelDao: ModelDao, val 
         apiHelper.getData()
             .subscribeOn(Schedulers.io())
             .flatMapCompletable { data ->
-                Completable.create { _ ->
-
-                    Log.d("Debugger", data.toString())
-                    modelDao.insertCountries(data)
-
+                Completable.create {
+                    dbHelper.insertCountries(data)
                 }
             }.subscribe()
     }
