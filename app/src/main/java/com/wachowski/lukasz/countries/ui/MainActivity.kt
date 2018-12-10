@@ -26,17 +26,13 @@ class MainActivity : AppCompatActivity() {
         AndroidInjection.inject(this)
 
         viewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel::class.java)
-        viewModel.getCountries()
-        subscribeToLiveData()
-
-        if (savedInstanceState == null) {
-            viewModel.dataManager.initializeData()
-        }
 
         recycler_view.adapter = listAdapter
+
+        subscribeUi()
     }
 
-    private fun subscribeToLiveData() {
-        viewModel.featureLiveData.observe(this, Observer { country -> country?.let { listAdapter.swapData(it) } })
+    private fun subscribeUi() {
+        viewModel.countryList.observe(this, Observer { pagedList -> listAdapter.submitList(pagedList) })
     }
 }

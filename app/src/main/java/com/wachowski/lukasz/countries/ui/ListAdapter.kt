@@ -1,18 +1,16 @@
 package com.wachowski.lukasz.countries.ui
 
-import android.support.v7.util.DiffUtil
+import android.arch.paging.PagedListAdapter
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wachowski.lukasz.countries.R
 import com.wachowski.lukasz.countries.data.model.Country
-import com.wachowski.lukasz.countries.utils.FeatureDiffUtil
+import com.wachowski.lukasz.countries.utils.CountryDiffUtil
 import kotlinx.android.synthetic.main.single_data.view.*
 
-class ListAdapter : RecyclerView.Adapter<ListAdapter.DataViewHolder>() {
-
-    private var data = ArrayList<Country>()
+class ListAdapter : PagedListAdapter<Country, ListAdapter.DataViewHolder>(CountryDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListAdapter.DataViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.single_data, parent, false)
@@ -20,27 +18,35 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.DataViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        holder.country.text = data[position].countryName
-        holder.domain.text = data[position].topLevelDomain.joinToString(separator = ", ")
-        holder.phone.text = data[position].callingCodes.joinToString(separator = ", ")
-        holder.currency.text = data[position].currencies.joinToString(separator = ", ") { it.currencyName }
-    }
 
-    override fun getItemCount(): Int {
-        return data.size
+        val country = getItem(position)
+
+        if (country != null) {
+            holder.bind(country)
+        } else {
+            holder.clear()
+        }
     }
 
     class DataViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val country = view.tv_country!!
-        val domain = view.tv_domain!!
-        val phone = view.tv_phone!!
-        val currency = view.tv_currency!!
-    }
 
-    fun swapData(newList: List<Country>) {
-        val diffResult = DiffUtil.calculateDiff(FeatureDiffUtil(data, newList))
-        data.clear()
-        data.addAll(newList)
-        diffResult.dispatchUpdatesTo(this)
+        private val tvCountry = view.tv_country!!
+        private val tvDomain = view.tv_domain!!
+        private val tvPhone = view.tv_phone!!
+        private val tvCurrency = view.tv_currency!!
+
+        fun bind(country: Country) {
+            tvCountry.text = country.countryName
+            tvDomain.text = country.topLevelDomain.joinToString(separator = ", ")
+            tvPhone.text = country.callingCodes.joinToString(separator = ", ")
+            tvCurrency.text = country.currencies.joinToString(separator = ", ") { it.currencyName }
+        }
+
+        fun clear() {
+            tvCountry.text = null
+            tvDomain.text = null
+            tvPhone.text = null
+            tvCurrency.text = null
+        }
     }
 }
