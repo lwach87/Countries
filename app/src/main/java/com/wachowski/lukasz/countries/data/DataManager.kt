@@ -29,9 +29,7 @@ class DataManager(private val apiHelper: ApiHelper, val modelDao: ModelDao, val 
             return
         }
 
-        Completable.fromAction { this.startFetchService() }
-            .subscribeOn(Schedulers.io())
-            .subscribe()
+        startFetchService()
 
         scheduleRecurringFetchDataSync()
 
