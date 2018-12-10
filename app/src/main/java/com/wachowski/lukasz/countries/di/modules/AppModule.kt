@@ -4,8 +4,7 @@ import android.app.Application
 import android.arch.persistence.room.Room
 import android.content.Context
 import com.wachowski.lukasz.countries.data.DataManager
-import com.wachowski.lukasz.countries.data.local.AppDbHelper
-import com.wachowski.lukasz.countries.data.local.DbHelper
+import com.wachowski.lukasz.countries.data.local.ModelDao
 import com.wachowski.lukasz.countries.data.local.ModelDatabase
 import com.wachowski.lukasz.countries.data.remote.ApiHelper
 import com.wachowski.lukasz.countries.utils.Constants
@@ -51,13 +50,13 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideDbHelper(appDbHelper: AppDbHelper): DbHelper {
-        return appDbHelper
+    fun provideModelDao(modelDatabase: ModelDatabase): ModelDao {
+        return modelDatabase.modelDao()
     }
 
     @Provides
     @Singleton
-    fun provideDataManager(apiHelper: ApiHelper, dbHelper: DbHelper, context: Context): DataManager {
-        return DataManager(apiHelper, dbHelper, context)
+    fun provideDataManager(apiHelper: ApiHelper, modelDao: ModelDao, context: Context): DataManager {
+        return DataManager(apiHelper, modelDao, context)
     }
 }

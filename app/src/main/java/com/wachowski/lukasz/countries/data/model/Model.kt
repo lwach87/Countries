@@ -12,12 +12,10 @@ data class Country(
     val countryName: String,
     val topLevelDomain: List<String>,
     val callingCodes: List<String>,
-    val capital: String,
     val currencies: List<Currency>
 )
 
 data class Currency(
-    @PrimaryKey
     @SerializedName("name")
     val currencyName: String,
     val code: String,

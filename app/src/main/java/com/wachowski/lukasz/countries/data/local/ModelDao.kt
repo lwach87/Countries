@@ -1,5 +1,6 @@
 package com.wachowski.lukasz.countries.data.local
 
+import android.arch.paging.DataSource
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
@@ -13,5 +14,5 @@ interface ModelDao {
     fun insertCountries(country: List<Country>)
 
     @Query("SELECT * FROM countries")
-    fun getCountries(): List<Country>
+    fun getAllCountries(): DataSource.Factory<Int, Country>
 }

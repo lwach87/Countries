@@ -3,8 +3,10 @@ package com.wachowski.lukasz.countries.data
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.support.annotation.NonNull
+import android.widget.Toast
 import com.firebase.jobdispatcher.*
-import com.wachowski.lukasz.countries.data.local.DbHelper
+import com.wachowski.lukasz.countries.data.local.ModelDao
 import com.wachowski.lukasz.countries.data.remote.ApiHelper
 import com.wachowski.lukasz.countries.utils.Constants.DATA_TAG
 import com.wachowski.lukasz.countries.utils.Constants.PREFS_INITIALIZED
@@ -12,9 +14,12 @@ import com.wachowski.lukasz.countries.utils.Constants.PREFS_NAME
 import com.wachowski.lukasz.countries.utils.Constants.SYNC_FLEXTIME_SECONDS
 import com.wachowski.lukasz.countries.utils.Constants.SYNC_INTERVAL_SECONDS
 import io.reactivex.Completable
+import io.reactivex.CompletableObserver
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
-class DataManager(private val apiHelper: ApiHelper, val dbHelper: DbHelper, val context: Context) {
+class DataManager(private val apiHelper: ApiHelper, val modelDao: ModelDao, val context: Context) {
 
     fun initializeData() {
 
@@ -66,8 +71,20 @@ class DataManager(private val apiHelper: ApiHelper, val dbHelper: DbHelper, val 
             .subscribeOn(Schedulers.io())
             .flatMapCompletable { data ->
                 Completable.create {
-                    dbHelper.insertCountries(data)
+                    modelDao.insertCountries(data)
                 }
-            }.subscribe()
+            }.subscribe(object : CompletableObserver {
+                override fun onSubscribe(@NonNull d: Disposable) {
+                    Timber.d("Sync started...")
+                }
+
+                override fun onComplete() {
+                    Timber.d("Sync finished...")
+                }
+
+                override fun onError(@NonNull e: Throwable) {
+                    Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 }
