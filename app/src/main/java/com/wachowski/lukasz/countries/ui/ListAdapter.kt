@@ -30,10 +30,10 @@ class ListAdapter : PagedListAdapter<Country, ListAdapter.DataViewHolder>(Countr
 
     class DataViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        private val tvCountry = view.tv_country!!
-        private val tvDomain = view.tv_domain!!
-        private val tvPhone = view.tv_phone!!
-        private val tvCurrency = view.tv_currency!!
+        private val tvCountry = view.tv_country
+        private val tvDomain = view.tv_domain
+        private val tvPhone = view.tv_phone
+        private val tvCurrency = view.tv_currency
 
         fun bind(country: Country) {
             tvCountry.text = country.countryName
