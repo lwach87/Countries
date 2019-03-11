@@ -2,9 +2,9 @@ package com.wachowski.lukasz.countries.di.component
 
 import android.app.Application
 import com.wachowski.lukasz.countries.CountriesApp
-import com.wachowski.lukasz.countries.di.modules.AppModule
-import com.wachowski.lukasz.countries.di.builder.DataServiceBuilder
 import com.wachowski.lukasz.countries.di.builder.ActivityBuilder
+import com.wachowski.lukasz.countries.di.builder.DataServiceBuilder
+import com.wachowski.lukasz.countries.di.modules.AppModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
