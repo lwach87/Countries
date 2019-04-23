@@ -1,9 +1,9 @@
 package com.wachowski.lukasz.countries.ui
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
-import android.arch.paging.LivePagedListBuilder
-import android.arch.paging.PagedList
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.wachowski.lukasz.countries.data.DataManager
 import com.wachowski.lukasz.countries.data.model.Country
 

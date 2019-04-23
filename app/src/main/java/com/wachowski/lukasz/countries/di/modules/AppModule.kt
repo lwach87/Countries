@@ -1,21 +1,6 @@
 package com.wachowski.lukasz.countries.di.modules
 
-import android.app.Application
-import android.arch.persistence.room.Room
-import android.content.Context
-import com.wachowski.lukasz.countries.data.DataManager
-import com.wachowski.lukasz.countries.data.local.ModelDao
-import com.wachowski.lukasz.countries.data.local.ModelDatabase
-import com.wachowski.lukasz.countries.data.remote.ApiHelper
-import com.wachowski.lukasz.countries.utils.Constants
-import com.wachowski.lukasz.countries.utils.Constants.DATABASE_NAME
-import dagger.Module
-import dagger.Provides
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
-
+/*
 @Module
 class AppModule {
 
@@ -60,3 +45,4 @@ class AppModule {
         return DataManager(apiHelper, modelDao, context)
     }
 }
+*/

@@ -1,6 +1,6 @@
 package com.wachowski.lukasz.countries.utils
 
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
 import com.wachowski.lukasz.countries.data.model.Country
 
 class CountryDiffUtil : DiffUtil.ItemCallback<Country>() {

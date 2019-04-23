@@ -1,11 +1,6 @@
 package com.wachowski.lukasz.countries.ui
 
-import android.arch.lifecycle.ViewModelProvider
-import com.wachowski.lukasz.countries.ViewModelProviderFactory
-import com.wachowski.lukasz.countries.data.DataManager
-import dagger.Module
-import dagger.Provides
-
+/*
 @Module
 class MainActivityModule {
 
@@ -24,3 +19,4 @@ class MainActivityModule {
         return ViewModelProviderFactory(mainViewModel)
     }
 }
+*/

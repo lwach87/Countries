@@ -1,7 +1,7 @@
 package com.wachowski.lukasz.countries.ui
 
-import android.arch.paging.PagedListAdapter
-import android.support.v7.widget.RecyclerView
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +28,7 @@ class ListAdapter : PagedListAdapter<Country, ListAdapter.DataViewHolder>(Countr
         }
     }
 
-    class DataViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class DataViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
 
         private val tvCountry = view.tv_country
         private val tvDomain = view.tv_domain

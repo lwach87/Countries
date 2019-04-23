@@ -1,17 +1,14 @@
 package com.wachowski.lukasz.countries
 
-import android.app.Activity
 import android.app.Application
-import android.app.Service
-import com.wachowski.lukasz.countries.di.component.DaggerAppComponent
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import dagger.android.HasServiceInjector
-import javax.inject.Inject
+import com.wachowski.lukasz.countries.di.modules.repositoryModule
+import com.wachowski.lukasz.countries.di.modules.retrofitModule
+import com.wachowski.lukasz.countries.di.modules.roomModule
+import org.koin.android.ext.android.startKoin
 
-class CountriesApp : Application(), HasActivityInjector, HasServiceInjector {
+class CountriesApp : Application() {
 
+    /*
     @Inject
     lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
@@ -25,14 +22,20 @@ class CountriesApp : Application(), HasActivityInjector, HasServiceInjector {
     override fun serviceInjector(): AndroidInjector<Service> {
         return serviceDispatchingAndroidInjector
     }
+    */
 
     override fun onCreate() {
         super.onCreate()
 
-        DaggerAppComponent
-            .builder()
-            .application(this)
-            .build()
-            .inject(this)
+//        DaggerAppComponent
+//            .builder()
+//            .application(this)
+//            .build()
+//            .inject(this)
+        initKoin()
+    }
+
+    private fun initKoin() {
+        startKoin(this, listOf(roomModule, retrofitModule, repositoryModule))
     }
 }
