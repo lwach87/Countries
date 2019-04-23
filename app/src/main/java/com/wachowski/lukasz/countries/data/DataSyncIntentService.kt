@@ -3,18 +3,18 @@ package com.wachowski.lukasz.countries.data
 import android.app.IntentService
 import android.content.Intent
 import com.wachowski.lukasz.countries.utils.Constants.SYNC_SERVICE
-import dagger.android.AndroidInjection
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 
 class DataSyncIntentService : IntentService(SYNC_SERVICE) {
 
-    @Inject
-    lateinit var dataManager: DataManager
+    //    @Inject
+//    lateinit var dataManager: DataManager
+    private val dataManager: DataManager by inject()
 
     override fun onCreate() {
         super.onCreate()
-        AndroidInjection.inject(this)
+//        AndroidInjection.inject(this)
     }
 
     override fun onHandleIntent(intent: Intent?) {

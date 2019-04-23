@@ -1,6 +1,6 @@
 package com.wachowski.lukasz.countries.data.local
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.wachowski.lukasz.countries.data.model.Currency

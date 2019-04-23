@@ -3,8 +3,8 @@ package com.wachowski.lukasz.countries.data
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
-import android.support.annotation.NonNull
 import android.widget.Toast
+import androidx.annotation.NonNull
 import com.firebase.jobdispatcher.*
 import com.wachowski.lukasz.countries.data.local.ModelDao
 import com.wachowski.lukasz.countries.data.remote.ApiHelper
@@ -19,7 +19,11 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-class DataManager(private val apiHelper: ApiHelper, val modelDao: ModelDao, val context: Context) {
+class DataManager(
+    private val apiHelper: ApiHelper,
+    val modelDao: ModelDao,
+    val context: Context
+) {
 
     fun initializeData() {
 
@@ -30,12 +34,12 @@ class DataManager(private val apiHelper: ApiHelper, val modelDao: ModelDao, val 
         }
 
         startFetchService()
-
         scheduleRecurringFetchDataSync()
 
-        val editor = preferences.edit()
-        editor.putBoolean(PREFS_INITIALIZED, true)
-        editor.apply()
+        preferences.edit().apply {
+            putBoolean(PREFS_INITIALIZED, true)
+            apply()
+        }
     }
 
     private fun startFetchService() {

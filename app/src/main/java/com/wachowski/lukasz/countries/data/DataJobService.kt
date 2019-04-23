@@ -2,14 +2,14 @@ package com.wachowski.lukasz.countries.data
 
 import com.firebase.jobdispatcher.JobParameters
 import com.firebase.jobdispatcher.JobService
-import dagger.android.AndroidInjection
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 
 class DataJobService : JobService() {
 
-    @Inject
-    lateinit var dataManager: DataManager
+    //    @Inject
+//    lateinit var dataManager: DataManager
+    private val dataManager: DataManager by inject()
 
     override fun onStartJob(job: JobParameters): Boolean {
         dataManager.syncData()
@@ -19,7 +19,7 @@ class DataJobService : JobService() {
 
     override fun onCreate() {
         super.onCreate()
-        AndroidInjection.inject(this)
+//        AndroidInjection.inject(this)
     }
 
     override fun onStopJob(job: JobParameters): Boolean {
