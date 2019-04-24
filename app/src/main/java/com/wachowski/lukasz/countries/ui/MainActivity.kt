@@ -12,18 +12,9 @@ class MainActivity : AppCompatActivity() {
     private val listAdapter = ListAdapter()
     private val viewModel: MainActivityViewModel by viewModel()
 
-//    @Inject
-//    lateinit var factory: ViewModelProvider.Factory
-//
-//    @Inject
-//    lateinit var listAdapter: ListAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        AndroidInjection.inject(this)
-
-//        viewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel::class.java)
 
         recyclerView.adapter = listAdapter
 
@@ -31,6 +22,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun subscribeUi() {
-        viewModel.countryList.observe(this, Observer { pagedList -> listAdapter.submitList(pagedList) })
+        viewModel.countryList.observe(this, Observer { listAdapter.submitList(it) })
     }
 }

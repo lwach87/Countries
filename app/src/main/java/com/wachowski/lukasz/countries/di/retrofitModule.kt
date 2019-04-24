@@ -1,4 +1,4 @@
-package com.wachowski.lukasz.countries.di.modules
+package com.wachowski.lukasz.countries.di
 
 import com.wachowski.lukasz.countries.data.remote.ApiHelper
 import com.wachowski.lukasz.countries.utils.Constants

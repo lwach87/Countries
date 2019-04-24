@@ -8,14 +8,7 @@ import org.koin.android.ext.android.inject
 
 class DataSyncIntentService : IntentService(SYNC_SERVICE) {
 
-    //    @Inject
-//    lateinit var dataManager: DataManager
     private val dataManager: DataManager by inject()
-
-    override fun onCreate() {
-        super.onCreate()
-//        AndroidInjection.inject(this)
-    }
 
     override fun onHandleIntent(intent: Intent?) {
         dataManager.syncData()

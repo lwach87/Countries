@@ -1,4 +1,4 @@
-package com.wachowski.lukasz.countries.di.modules
+package com.wachowski.lukasz.countries.di
 
 import androidx.room.Room
 import com.wachowski.lukasz.countries.data.local.ModelDatabase

@@ -1,4 +1,4 @@
-package com.wachowski.lukasz.countries.di.modules
+package com.wachowski.lukasz.countries.di
 
 import com.wachowski.lukasz.countries.data.DataManager
 import com.wachowski.lukasz.countries.ui.MainActivityViewModel
